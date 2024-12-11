@@ -1,12 +1,24 @@
 #!/bin/bash
+sudo su
+
 yum update -y
 yum upgrade -y
 yum install -y docker
 systemctl start docker
 systemctl enable docker
 
-curl -L "https://github.com/docker/compose/releases/download/2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+yum install mariadb -y
+
+mysql -h database-1.czo6kkkuahoa.us-east-1.rds.amazonaws.com -P 3306 -u admin -p008admin! <<EOF
+CREATE DATABASE dbDesafio02;
+EXIT;
+EOF
+
+mkdir -p /usr/lib/docker/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.30.3/docker-compose-linux-x86_64 -o /usr/lib/docker/cli-plugins/docker-compose
+chmod +x /usr/lib/docker/cli-plugins/docker-compose
+
+usermod -aG docker ec2-user
 
 mkdir -p /home/ec2-user/wordpress
 cd /home/ec2-user/wordpress
@@ -18,12 +30,12 @@ services:
   wordpress:
     image: wordpress:latest
     ports:
-      - "80:80"
+      - 8080:80
     environment:
-      WORDPRESS_DB_HOST: <RDS_ENDPOINT>
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: dbdesafio02.cby088cym3id.us-east-1.rds.amazonaws.com
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: 008admin!
+      WORDPRESS_DB_NAME: dbDesafio02
     volumes:
       - wp-data:/var/www/html
 
@@ -31,6 +43,5 @@ volumes:
   wp-data:
 EOL
 
-docker-compose up -d
-
-echo "Docker, Docker Compose e WordPress configurados com sucesso."
+chown -R ec2-user:ec2-user /home/ec2-user/wordpress
+docker compose -f /home/ec2-user/wordpress/docker-compose.yml up -d
