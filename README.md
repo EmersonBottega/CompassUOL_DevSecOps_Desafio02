@@ -37,7 +37,12 @@ A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e nã
 
 # Passo a Passo
 
-## 1. Configuração do Host EC2
+## 1. Criando VPC
+1. Pesquisar por VPC na AWS e vá em > suas VPC's > Criar VPC. Ao criar selecione > VPC e muito mais e em seguida > Criar VPC.
+
+![CriandoVPC](https://github.com/user-attachments/assets/6b046f25-b2af-4731-9e88-1dfb02911b8f)
+
+## 1. Configuração das Instâncias EC2
 Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório como base).
 
  - O arquivo user_data.sh contém os comandos necessários para:
@@ -45,7 +50,7 @@ Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste r
 2. Instalar e configurar o Elastic File System.
 3. Configurar o MySql.
 4. Configurar o ambiente para o deploy da aplicação WordPress.
-5. Corrigir um problema para usar o Classic Load Balancer.
+5. Adicionar um endpoint no wordpress para usar o Classic Load Balancer.
 
  - Crie uma instância EC2 na AWS com:
 1. Sistema operacional: Amazon Linux 2 ou Oracle Linux.
@@ -60,7 +65,7 @@ Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste r
 
 3. Copie o conteúdo do arquivo user_data.sh para o campo Detalhes avançados > Dados do Usuário na tela de configuração da instância.
 
-![SO-EC2](https://github.com/user-attachments/assets/a6020829-d239-44c8-a908-9e78ebe4a04d)
+![DadosDoUsuario](https://github.com/user-attachments/assets/fb72fc09-89cb-4aae-b9c1-8b89c8a841ec)
 
 ## 2. Configuração do Banco de Dados RDS MySQL
 Acesse o console AWS e crie uma instância RDS MySQL.
