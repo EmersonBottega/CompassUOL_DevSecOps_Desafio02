@@ -10,8 +10,12 @@ Desafio 02 - Feito no programa de bolsas DevSecOps da Compass.uol.
  - Subir instância EC2 ✅
  - Subir RDS MySql ✅
  - Wordpress funcionando ✅
- - Utilizar Elastic File System ❌
- - Utilizar Load Balancer ❌
+ - Utilizar Elastic File System ✅
+ - Utilizar Load Balancer ✅
+ - Utilizar Auto Scaling ✅ 
+
+# Arquitetura do Projeto:
+![Arquitetura](https://github.com/user-attachments/assets/c5ee14ea-2c7b-4a15-ba23-094d95bdb3d0)
 
 # Visão Geral
 
@@ -20,6 +24,7 @@ Desafio 02 - Feito no programa de bolsas DevSecOps da Compass.uol.
  - Banco de dados MySQL gerenciado pelo serviço AWS RDS.
  - Sistema de arquivos EFS AWS para armazenar os arquivos estáticos do WordPress.
  - Load Balancer Classic da AWS para gerenciar o tráfego.
+ - Auto Scaling para adicionar ou remover automaticamente a capacidade de grupos de recursos em tempo real para acompanhar a demanda.
    
 A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e não utilizará IP público para saída direta.
 
@@ -33,20 +38,29 @@ A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e nã
 # Passo a Passo
 
 ## 1. Configuração do Host EC2
-Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório).
+Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório como base).
 
  - O arquivo user_data.sh contém os comandos necessários para:
 1. Instalar e configurar o Docker ou Containerd.
-2. Instalar e configurar o MySql.
-3. Configurar o ambiente para o deploy da aplicação WordPress.
+2. Instalar e configurar o Elastic File System.
+3. Configurar o MySql.
+4. Configurar o ambiente para o deploy da aplicação WordPress.
+5. Corrigir um problema para usar o Classic Load Balancer.
 
  - Crie uma instância EC2 na AWS com:
 1. Sistema operacional: Amazon Linux 2 ou Oracle Linux.
-2. Grupo de segurança configurado para permitir tráfego HTTP/HTTPS nas portas 80 e/ou 8080.
-3. Copie o conteúdo do arquivo user_data.sh para o campo Advanced > User Data na tela de configuração da instância.
 
- - Inicie a instância e verifique se o script foi executado corretamente:
-1. ```bash sudo docker --version ```
+![SO-EC2](https://github.com/user-attachments/assets/83e4d4b4-e4bb-4df4-bd76-6153506b48df)
+
+2. Vá em Security Groups e crie um grupo de segurança da EC2.
+
+![Entrada_EC2](https://github.com/user-attachments/assets/37864be9-a18e-41ed-899f-ef93d3dafbf2)
+
+![Saida_EC2](https://github.com/user-attachments/assets/d9b450a9-fabc-4b84-9ca4-b66df7e50c14)
+
+3. Copie o conteúdo do arquivo user_data.sh para o campo Detalhes avançados > Dados do Usuário na tela de configuração da instância.
+
+![SO-EC2](https://github.com/user-attachments/assets/a6020829-d239-44c8-a908-9e78ebe4a04d)
 
 ## 2. Configuração do Banco de Dados RDS MySQL
 Acesse o console AWS e crie uma instância RDS MySQL.
