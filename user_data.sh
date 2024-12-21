@@ -25,6 +25,7 @@ version: '3.8'
 services:
   wordpress:
     image: wordpress:latest
+    container_name: wordpress-app
     ports:
       - 80:80
     environment:
