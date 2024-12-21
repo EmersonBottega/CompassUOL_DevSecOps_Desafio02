@@ -4,6 +4,7 @@ Desafio 02 - Feito no programa de bolsas DevSecOps da Compass.uol.
 # Tecnologias utilizadas:
 - Docker
 - AWS
+- Linux
 
 ## Tarefas:
  - Script de automação ✅
@@ -42,7 +43,7 @@ A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e nã
 
 ![CriandoVPC](https://github.com/user-attachments/assets/6b046f25-b2af-4731-9e88-1dfb02911b8f)
 
-## 1. Configuração das Instâncias EC2
+## 2. Configuração das Instâncias EC2
 Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório como base).
 
  - O arquivo user_data.sh contém os comandos necessários para:
@@ -67,37 +68,52 @@ Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste r
 
 ![DadosDoUsuario](https://github.com/user-attachments/assets/fb72fc09-89cb-4aae-b9c1-8b89c8a841ec)
 
-## 2. Configuração do Banco de Dados RDS MySQL
-Acesse o console AWS e crie uma instância RDS MySQL.
+## 3. Configuração do Banco de Dados RDS MySQL
+Acesse o console AWS, pesquisar por > RDS > Criar banco de dados > MySQL.
 
  - Configure:
 1. VPC da mesma região que sua instância EC2.
-2. Crie um security group permitindo acesso somente da instância EC2.
-3. Anote as credenciais de acesso (endpoint, usuário, senha).
+2. Modelos: Nível Gratuito
+3. Crie um security group do RDS apontando para o security group criado para a EC2.
 
-## 3. Configuração do AWS EFS
-No console AWS, crie um sistema de arquivos EFS.
+![Entrada_RDS](https://github.com/user-attachments/assets/b7ae36a4-81e5-4227-969f-23585b3bb234)
 
- - Configure pontos de montagem na mesma região/VPC da sua EC2.
-1. Monte o EFS na instância EC2 utilizando:
-```bash sudo mount -t nfs4 -o nfsvers=4.1 <EFS_ENDPOINT>:/ /mnt/efs ```
+4. Dê um nome para criar um banco automaticamente e funcionar de acordo com o script user_data.sh deste repositório.
 
- - Configure permissões para o usuário que executa o WordPress:
-1. ```bash sudo chown -R ec2-user:ec2-user /mnt/efs ```
+![nomeRDS](https://github.com/user-attachments/assets/4c4a888e-4e81-49c9-bb1d-a40fadefe036)
 
-## 4. Configuração do Load Balancer
-Crie um Load Balancer Classic no console AWS.
+5. Anote as credenciais de acesso (endpoint, usuário, senha) e coloque em seu user_data.
+
+## 4. Configuração do AWS EFS
+No console AWS, Pesquise por EFS > Criar sistema de arquivos > Personalizar.
 
  - Configure:
-1. Backend apontando para sua instância EC2.
-2. Políticas para redirecionar tráfego HTTP/HTTPS.
-3. Teste o acesso via Load Balancer ao WordPress.
+1. Após dar um nome, selecione Regional e configure assim:
+
+![configEFS](https://github.com/user-attachments/assets/4f86afb7-9250-44a7-9894-4df172d69f54)
+
+2. Crie um security group para o EFS:
+
+![Entrada_EFS](https://github.com/user-attachments/assets/1e981cfd-7190-4f50-b19e-1ca8b0a65a1c)
+
+3. Selecione a mesma VPC da EC2 e continue até criar.
+
+## 5. Configuração do Load Balancer
+Pesquise por Load Balancer (EC2 feature) no console AWS > Criar Load Balancer.
+
+ - Configure:
+1. Classic Load Balancer - _geração anterior_.
+2. Voltado para a Internet.
+3. Mesma VPC da EC2.
+4. Mesmo security group da EC2.
+5. Caminho de ping:
+
+![configCLB](https://github.com/user-attachments/assets/ec5afeb5-29b6-4b2a-93fa-7e88ae2dec46)
 
 ## Demonstração
 Confirme que o WordPress está acessível na porta configurada (80 ou 8080).
 
- - Utilize o IP da EC2 e a porta 8080.
- - Em uma aba do navegador coloque <IP:8080>
+ - Em uma aba do navegador coloque o DNS que o Classic Load Balancer gerou.
  - Apresente a tela de login para validação do funcionamento.
 
 ## Parabéns! :tada:
