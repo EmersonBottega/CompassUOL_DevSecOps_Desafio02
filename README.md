@@ -44,6 +44,13 @@ A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e nã
 ![CriandoVPC](https://github.com/user-attachments/assets/6b046f25-b2af-4731-9e88-1dfb02911b8f)
 
 ## 2. Configuração das Instâncias EC2
+
+### ⚠ Atenção ⚠
+- Olhe o passo 6 (para criar um template de EC2 onde o Auto Scaling irá gerenciar as instâncias EC2);
+- Com o passo 6, não há a necessidade de criar uma EC2 manualmente (apenas para aprendizado/teste);
+- Você também pode criar a EC2 de acordo com o passo 2 e depois atribui-lo ao Auto Scaling.
+
+### Criando EC2
 Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório como base).
 
  - O arquivo user_data.sh contém os comandos necessários para:
@@ -109,6 +116,33 @@ Pesquise por Load Balancer (EC2 feature) no console AWS > Criar Load Balancer.
 5. Caminho de ping:
 
 ![configCLB](https://github.com/user-attachments/assets/ec5afeb5-29b6-4b2a-93fa-7e88ae2dec46)
+
+## 6. Configurando Auto Scaling
+Pesquise por Auto Scaling groups no console AWS > Criar grupo do Auto Scaling.
+
+- Configure:
+### Etapa 1:
+1. Clique em criar um modelo de execução (template) e ajuste de acordo com o passo 2.
+2. Selecione a template criada e vá em > Próximo.
+
+### Etapa 2:
+1. Escolha a VPC criada no passo 1.
+2. Coloque as sub-redes privadas (east-1a e east-2b).
+
+### Etapa 3:
+
+
+### Etapa 4:
+
+
+### Etapa 5:
+
+
+### Etapa 6:
+
+
+### Etapa 7:
+
 
 ## Demonstração
 Confirme que o WordPress está acessível na porta configurada (80 ou 8080).
