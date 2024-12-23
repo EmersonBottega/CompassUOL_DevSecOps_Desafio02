@@ -8,10 +8,10 @@ Desafio 02 - Feito no programa de bolsas DevSecOps da Compass.uol.
 
 ## Tarefas:
  - Script de automação ✅
- - Subir instância EC2 ✅
- - Subir RDS MySql ✅
- - Wordpress funcionando ✅
  - Utilizar Elastic File System ✅
+ - Subir RDS MySql ✅
+ - Subir instância EC2 ✅
+ - Wordpress funcionando ✅
  - Utilizar Load Balancer ✅
  - Utilizar Auto Scaling ✅ 
 
@@ -32,9 +32,9 @@ A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e nã
 ## Requisitos:
  - Conta AWS com permissões suficientes para:
 1. Gerenciar instâncias EC2.
-2. Configurar Load Balancers.
+2. Criar e configurar o Elastic File System (EFS).
 3. Criar e configurar um banco de dados RDS MySQL.
-4. Criar e configurar o Elastic File System (EFS).
+4. Configurar Load Balancers.
 
 # Passo a Passo
 
@@ -43,7 +43,37 @@ A aplicação WordPress será configurada para rodar nas portas 80 ou 8080 e nã
 
 ![CriandoVPC](https://github.com/user-attachments/assets/6b046f25-b2af-4731-9e88-1dfb02911b8f)
 
-## 2. Configuração das Instâncias EC2
+## 2. Configuração do AWS EFS
+No console AWS, Pesquise por EFS > Criar sistema de arquivos > Personalizar.
+
+ - Configure:
+1. Após dar um nome, selecione Regional e configure assim:
+
+![configEFS](https://github.com/user-attachments/assets/4f86afb7-9250-44a7-9894-4df172d69f54)
+
+2. Crie um security group para o EFS:
+
+![Entrada_EFS](https://github.com/user-attachments/assets/1e981cfd-7190-4f50-b19e-1ca8b0a65a1c)
+
+3. Selecione a mesma VPC da EC2 e continue até criar.
+
+## 3. Configuração do Banco de Dados RDS MySQL
+Acesse o console AWS, pesquisar por > RDS > Criar banco de dados > MySQL.
+
+ - Configure:
+1. VPC da mesma região que sua instância EC2.
+2. Modelos: Nível Gratuito
+3. Crie um security group do RDS apontando para o security group criado para a EC2.
+
+![Entrada_RDS](https://github.com/user-attachments/assets/b7ae36a4-81e5-4227-969f-23585b3bb234)
+
+4. Dê um nome para criar um banco automaticamente e funcionar de acordo com o script user_data.sh deste repositório.
+
+![nomeRDS](https://github.com/user-attachments/assets/4c4a888e-4e81-49c9-bb1d-a40fadefe036)
+
+5. Anote as credenciais de acesso (endpoint, usuário, senha) e coloque em seu user_data.
+
+## 4. Configuração das Instâncias EC2
 
 ### ⚠ Atenção ⚠
 - Olhe o passo 6 (para criar um template de EC2 onde o Auto Scaling irá gerenciar as instâncias EC2);
@@ -75,36 +105,6 @@ Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste r
 
 ![DadosDoUsuario](https://github.com/user-attachments/assets/fb72fc09-89cb-4aae-b9c1-8b89c8a841ec)
 
-## 3. Configuração do Banco de Dados RDS MySQL
-Acesse o console AWS, pesquisar por > RDS > Criar banco de dados > MySQL.
-
- - Configure:
-1. VPC da mesma região que sua instância EC2.
-2. Modelos: Nível Gratuito
-3. Crie um security group do RDS apontando para o security group criado para a EC2.
-
-![Entrada_RDS](https://github.com/user-attachments/assets/b7ae36a4-81e5-4227-969f-23585b3bb234)
-
-4. Dê um nome para criar um banco automaticamente e funcionar de acordo com o script user_data.sh deste repositório.
-
-![nomeRDS](https://github.com/user-attachments/assets/4c4a888e-4e81-49c9-bb1d-a40fadefe036)
-
-5. Anote as credenciais de acesso (endpoint, usuário, senha) e coloque em seu user_data.
-
-## 4. Configuração do AWS EFS
-No console AWS, Pesquise por EFS > Criar sistema de arquivos > Personalizar.
-
- - Configure:
-1. Após dar um nome, selecione Regional e configure assim:
-
-![configEFS](https://github.com/user-attachments/assets/4f86afb7-9250-44a7-9894-4df172d69f54)
-
-2. Crie um security group para o EFS:
-
-![Entrada_EFS](https://github.com/user-attachments/assets/1e981cfd-7190-4f50-b19e-1ca8b0a65a1c)
-
-3. Selecione a mesma VPC da EC2 e continue até criar.
-
 ## 5. Configuração do Load Balancer
 Pesquise por Load Balancer (EC2 feature) no console AWS > Criar Load Balancer.
 
@@ -122,7 +122,7 @@ Pesquise por Auto Scaling groups no console AWS > Criar grupo do Auto Scaling.
 
 - Configure:
 ### Etapa 1:
-1. Clique em criar um modelo de execução (template) e ajuste de acordo com o passo 2.
+1. Clique em criar um modelo de execução (template) e ajuste de acordo com o passo 4.
 2. Selecione a template criada e vá em > Próximo.
 
 ### Etapa 2:
@@ -130,19 +130,28 @@ Pesquise por Auto Scaling groups no console AWS > Criar grupo do Auto Scaling.
 2. Coloque as sub-redes privadas (east-1a e east-2b).
 
 ### Etapa 3:
+1. Configure da seguinte maneira:
 
+![AS_etapa3](https://github.com/user-attachments/assets/05fa80cc-9352-4da8-9c95-409c9ff0c8c4)
+
+2. Nas Verificações de integridade, Ative as verificações de integridade do Elastic Load Balancing.
 
 ### Etapa 4:
+1. Altere a capacidade desejada para 2 e crie:
 
+![AS_etapa4](https://github.com/user-attachments/assets/2da21226-d414-4475-a97d-4ef264d9d4d2)
 
 ### Etapa 5:
+#### ⚠ Opcional ⚠
+- Adicionar Notificações
 
+![AS_etapa5](https://github.com/user-attachments/assets/2cbe16be-6b8e-401a-870f-84ff01d3ed3a)
 
 ### Etapa 6:
-
+- Coloque suas Tags.
 
 ### Etapa 7:
-
+- Confira o resumo e crie o Grupo do Auto Scaling.
 
 ## Demonstração
 Confirme que o WordPress está acessível na porta configurada (80 ou 8080).
