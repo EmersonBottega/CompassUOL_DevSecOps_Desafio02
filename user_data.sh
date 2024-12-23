@@ -41,10 +41,7 @@ volumes:
   wp-data:
 EOL
 
-docker compose -f /home/ec2-user/wordpress/docker-compose.yml up -d
-
-docker exec -it wordpress-app bash
-cat <<EOF > healthcheck.php
+cat <<EOF > /mnt/efs/healthcheck.php
 <?php
 http_response_code(200);
 header('Content-Type: application/json');
@@ -56,3 +53,5 @@ EOF
 usermod -aG docker ec2-user
 newgrp docker
 chown -R ec2-user:ec2-user /home/ec2-user/wordpress
+
+docker compose -f /home/ec2-user/wordpress/docker-compose.yml up -d
