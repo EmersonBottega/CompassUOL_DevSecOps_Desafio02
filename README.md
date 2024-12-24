@@ -67,8 +67,10 @@ A imagem acima configura os seguintes items:
 ## Configuração do AWS EFS
 No console AWS, Pesquise por EFS > Criar sistema de arquivos > Personalizar.
 
+![criarEFS](https://github.com/user-attachments/assets/b48e551b-648d-4a77-955b-4030c5c19840)
+
  - Configure:
-1. Após dar um nome, selecione Regional e configure assim:
+1. Após dar um nome, selecione > Regional e configure assim:
 
 ![configEFS](https://github.com/user-attachments/assets/4f86afb7-9250-44a7-9894-4df172d69f54)
 
