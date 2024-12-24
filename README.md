@@ -128,11 +128,11 @@ Pesquise por Auto Scaling groups no console AWS > Criar grupo do Auto Scaling.
 
 - Configure:
 ### Etapa 1:
-1. Clique em criar um modelo de execução (template) e ajuste de acordo com o passo 4.
+1. Clique em criar um modelo de execução (template) e ajuste de acordo com o passo [Configuração das Instâncias EC2](#configuração-das-instâncias-ec2).
 2. Selecione a template criada e vá em > Próximo.
 
 ### Etapa 2:
-1. Escolha a VPC criada no passo 1.
+1. Escolha a VPC criada no passo [Criando VPC](#criando-vpc).
 2. Coloque as sub-redes privadas (east-1a e east-2b).
 
 ### Etapa 3:
