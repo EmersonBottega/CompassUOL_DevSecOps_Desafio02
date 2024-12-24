@@ -88,13 +88,15 @@ Acesse o console AWS, pesquisar por > RDS > Criar banco de dados > MySQL.
 
 ![nomeRDS](https://github.com/user-attachments/assets/4c4a888e-4e81-49c9-bb1d-a40fadefe036)
 
-4. Anote as credenciais de acesso (endpoint, usuário, senha) e coloque em seu user_data.
+> [!Important]
+> Anote as credenciais de acesso (endpoint, usuário, senha) e coloque em seu user_data.
 
 ## Configuração das Instâncias EC2
 
 ### ⚠ Atenção ⚠
 - Olhe o passo [Configurando Auto Scaling](#configurando-auto-scaling) (para criar um template de EC2 onde o Auto Scaling irá gerenciar as instâncias EC2);
-- Com o passo [Configurando Auto Scaling](#configurando-auto-scaling), não há a necessidade de criar uma EC2 manualmente (apenas para aprendizado/teste);
+> [!Warning]
+> Com o passo [Configurando Auto Scaling](#configurando-auto-scaling), não há a necessidade de criar uma EC2 manualmente (apenas para aprendizado/teste);
 - Você também pode criar a EC2 de acordo com o passo [Configuração das Instâncias EC2](#configuração-das-instâncias-ec2) e depois atribui-lo ao Auto Scaling.
   
 - Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório como base), com os comandos necessários para:
