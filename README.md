@@ -91,9 +91,9 @@ Acesse o console AWS, pesquisar por > RDS > Criar banco de dados > MySQL.
 ## Configuração das Instâncias EC2
 
 ### ⚠ Atenção ⚠
-- Olhe o passo [Configurando Auto Scaling](#-configurando-auto-scaling) (para criar um template de EC2 onde o Auto Scaling irá gerenciar as instâncias EC2);
-- Com o passo [Configurando Auto Scaling](#-configurando-auto-scaling), não há a necessidade de criar uma EC2 manualmente (apenas para aprendizado/teste);
-- Você também pode criar a EC2 de acordo com o passo [Configuração das Instâncias EC2](#-configuração-das-instâncias-ec2) e depois atribui-lo ao Auto Scaling.
+- Olhe o passo [Configurando Auto Scaling](#configurando-auto-scaling) (para criar um template de EC2 onde o Auto Scaling irá gerenciar as instâncias EC2);
+- Com o passo [Configurando Auto Scaling](#configurando-auto-scaling), não há a necessidade de criar uma EC2 manualmente (apenas para aprendizado/teste);
+- Você também pode criar a EC2 de acordo com o passo [Configuração das Instâncias EC2](#configuração-das-instâncias-ec2) e depois atribui-lo ao Auto Scaling.
   
 - Faça um script do tipo shell "user_data.sh" (utilize o arquivo colocado neste repositório como base), com os comandos necessários para:
 1. Instalar e configurar o Docker ou Containerd.
@@ -159,7 +159,7 @@ Pesquise por Auto Scaling groups no console AWS > Criar grupo do Auto Scaling.
 - Confira o resumo e crie o Grupo do Auto Scaling.
 
 ## Conclusão do Projeto
-Pesquise no Console da AWS pelo Load Balancer
+Pesquise no Console da AWS pelo Load Balancer 
 
  - Em uma aba do navegador coloque o DNS que o Classic Load Balancer gerou.
  - Apresente a tela inicial para validação do funcionamento:
