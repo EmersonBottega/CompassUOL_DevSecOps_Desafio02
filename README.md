@@ -1,3 +1,5 @@
+# CompassUOL Desafio02 - Wordpress
+
 # Visão Geral
 
 ## Este repositório contém os arquivos e instruções necessários para realizar o deploy de uma aplicação WordPress utilizando:
